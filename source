@@ -1,0 +1,77 @@
+var score = 0;
+var player = createSprite(80,300);
+var lives = 3;
+var drink = createSprite(randomNumber(400, 500),randomNumber(25, 375));
+drink.velocityX = -5;
+var chip = createSprite(randomNumber(400, 500),randomNumber(25, 375));
+chip.velocityX = -5;
+// Create your sprites here
+player.setAnimation("grade");
+drink.setAnimation("mountain-dew-bottle.jpg_1");
+drink.scale =0.3;
+chip.setAnimation("images (1).jfif_1");
+chip.scale = 0.4;
+drink.setCollider("circle");
+chip.setCollider("circle");
+function draw() {
+bg1();
+showScore();
+showLives();
+loopItems();
+controlPlayer();
+ playerFall();
+ collectItems();
+  // update sprites
+
+  drawSprites();
+}
+
+function bg1() {
+  background("white");
+}
+function showScore() {
+  fill("black");
+  textSize(20);
+  text("Score:" + score, 5,30);
+}
+function showLives() {
+  fill("black");
+  textSize(22);
+  text("Lives:" + lives,310,30);
+}
+function loopItems() {
+  if (chip.x < 0) {
+    chip.x = randomNumber(400, 500);
+ chip.y = randomNumber(25,375);
+  }
+  if (drink.x < 0) {
+    drink.x = randomNumber(400, 500);
+  drink.y = randomNumber(25,375);
+  }
+}
+function controlPlayer() {
+  if (keyDown("right")) {
+    player.x = player.x + 2;
+  }
+  if (keyDown("left")) {
+  player.x = player.x - 2;
+}
+if (keyDown("space")) {
+  player.velocityY = -5;
+}
+}
+function playerFall() {
+player.velocityY = player.velocityY + 0.3;
+}
+function collectItems() {
+if (player.isTouching(chip)) {
+ chip.x = randomNumber(25,375);
+ chip.y = randomNumber(0,-100);
+ score = score + 1;
+  }
+if (player.isTouching(drink)) {
+    drink.x = randomNumber(400,500);
+ drink.y = randomNumber(25,375);
+ score = score + 1;
+  }
+}
